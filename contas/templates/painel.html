@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Meu Painel</title>
+</head>
+<body>
+    <h1>Bem-vindo à sua área restrita, {{ user.username }}!</h1>
+    
+    <p>Se está a ver isto, é porque fez login com sucesso.</p>
+
+    <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Sair da conta</button>
+    </form>
+</body>
+</html>

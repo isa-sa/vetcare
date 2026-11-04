@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Página Inicial</title>
+</head>
+<body>
+    <h1>Bem-vindo ao Meu Site!</h1>
+    
+    {% if user.is_authenticated %}
+        <p>Olá, {{ user.username }}! Você está logado.</p>
+        <a href="{% url 'painel' %}">Ir para o Painel</a>
+        
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Sair</button>
+        </form>
+    {% else %}
+        <p>Você não está logado.</p>
+        <a href="{% url 'login' %}">Fazer Login</a>
+        <a href="{% url 'signup' %}">Criar uma Conta</a>
+    {% endif %}
+</body>
+</html>

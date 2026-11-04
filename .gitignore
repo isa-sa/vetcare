@@ -1,0 +1,24 @@
+# Ambientes Virtuais
+venv/
+.venv/
+env/
+
+# Cache do Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Base de Dados Local
+db.sqlite3
+
+# Variáveis de Ambiente
+.env
+
+# Media e Ficheiros Estáticos
+media/
+staticfiles/
+
+# Editores e SO
+.vscode/
+.idea/
+.DS_Store

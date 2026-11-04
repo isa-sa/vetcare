@@ -1,0 +1,7 @@
+<h2>Entrar no Sistema</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }} 
+  <button type="submit">Entrar</button>
+  <p><a href="{% url 'password_reset' %}">Esqueceu a senha?</a></p>
+</form>
