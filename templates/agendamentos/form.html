@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block title %}Agenda de Consultas - VetCare{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Agenda de Consultas</h2>
+    <a href="{% url 'novo_agendamento' %}" class="btn btn-success">+ Novo Agendamento</a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        {% if consultas %}
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Data e Hora</th>
+                        <th>Paciente (Pet)</th>
+                        <th>Tutor</th>
+                        <th>Veterinário</th>
+                        <th>Motivo</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in consultas %}
+                    <tr>
+                        <td class="fw-semibold">{{ c.data_hora|date:"d/m/Y H:i" }}</td>
+                        <td>{{ c.pet.nome }} <small class="text-muted">({{ c.pet.get_especie_display }})</small></td>
+                        <td>{{ c.pet.tutor.nome }}</td>
+                        <td>{{ c.veterinario.username }}</td>
+                        <td>{{ c.motivo }}</td>
+                        <td>
+                            {% if c.status == 'AGENDADA' %}
+                                <span class="badge bg-primary">Agendada</span>
+                            {% elif c.status == 'EM_ATENDIMENTO' %}
+                                <span class="badge bg-warning text-dark">Em Atendimento</span>
+                            {% elif c.status == 'CONCLUIDA' %}
+                                <span class="badge bg-success">Concluída</span>
+                            {% else %}
+                                <span class="badge bg-secondary">Cancelada</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if c.status != 'CONCLUIDA' and c.status != 'CANCELADA' %}
+                            <form method="post" action="{% url 'mudar_status_consulta' c.id %}" class="d-flex gap-1">
+                                {% csrf_token %}
+                                {% if c.status == 'AGENDADA' %}
+                                    <button name="status" value="EM_ATENDIMENTO" class="btn btn-sm btn-outline-warning">Iniciar</button>
+                                {% endif %}
+                                <button name="status" value="CONCLUIDA" class="btn btn-sm btn-outline-success">Concluir</button>
+                                <button name="status" value="CANCELADA" class="btn btn-sm btn-outline-danger">Cancelar</button>
+                            </form>
+                            {% else %}
+                                <span class="text-muted small">Finalizado</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+            <p class="text-muted mb-0">Nenhuma consulta agendada.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

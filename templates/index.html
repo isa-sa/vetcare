@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Página Inicial</title>
+</head>
+<body>
+    <h1>Bem-vindo ao Meu Site!</h1>
+    
+    {% if user.is_authenticated %}
+        <p>Olá, {{ user.username }}! Você está logado.</p>
+        <a href="{% url 'painel' %}">Ir para o Painel</a>
+        
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Sair</button>
+        </form>
+    {% else %}
+        <p>Você não está logado.</p>
+        <a href="{% url 'login' %}">Fazer Login</a>
+        <a href="{% url 'signup' %}">Criar uma Conta</a>
+    {% endif %}
+
+    <div class="row g-4 mt-2">
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title">Tutores e Pacientes (Pets)</h5>
+                <p class="card-text text-muted">Gerencie os cadastros de responsáveis e histórico básico dos animais.</p>
+                <a href="{% url 'listar_clientes' %}" class="btn btn-primary">Acessar Cadastros</a>
+                <a href="{% url 'cadastrar_tutor' %}" class="btn btn-outline-primary">+ Novo Tutor</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title">Agenda de Consultas</h5>
+                <p class="card-text text-muted">Visualize atendimentos do dia, marque horários sem conflito e atualize status.</p>
+                <a href="{% url 'listar_agenda' %}" class="btn btn-success">Ver Agenda</a>
+                <a href="{% url 'novo_agendamento' %}" class="btn btn-outline-success">+ Agendar Consulta</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

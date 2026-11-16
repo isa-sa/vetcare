@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}Tutores e Pets - VetCare{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Tutores e Pets Cadastrados</h2>
+    <div>
+        <a href="{% url 'cadastrar_tutor' %}" class="btn btn-primary">+ Novo Tutor</a>
+        <a href="{% url 'cadastrar_pet' %}" class="btn btn-outline-primary">+ Novo Pet</a>
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        {% if tutores %}
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Tutor</th>
+                        <th>CPF</th>
+                        <th>Telefone</th>
+                        <th>Pets Vinculados</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tutor in tutores %}
+                    <tr>
+                        <td class="fw-semibold">{{ tutor.nome }}</td>
+                        <td>{{ tutor.cpf }}</td>
+                        <td>{{ tutor.telefone }}</td>
+                        <td>
+                            {% for pet in tutor.pets.all %}
+                                <span class="badge bg-info text-dark me-1">
+                                    {{ pet.nome }} ({{ pet.get_especie_display }})
+                                </span>
+                            {% empty %}
+                                <span class="text-muted small">Nenhum pet cadastrado</span>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+            <p class="text-muted mb-0">Nenhum tutor cadastrado até o momento.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

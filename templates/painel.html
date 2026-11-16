@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block title %}Painel Principal - VetCare{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-0">Painel Operacional</h2>
+        <p class="text-muted mb-0">Bem-vindo ao sistema de gestão clínica VetCare, <strong>{{ user.username }}</strong>.</p>
+    </div>
+    <div class="d-none d-md-flex gap-2">
+        <a href="{% url 'cadastrar_tutor' %}" class="btn btn-outline-primary">+ Novo Tutor</a>
+        <a href="{% url 'cadastrar_pet' %}" class="btn btn-outline-primary">+ Novo Pet</a>
+        <a href="{% url 'novo_agendamento' %}" class="btn btn-success">+ Agendar Consulta</a>
+    </div>
+</div>
+
+{% if total_tutores is not None %}
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm bg-white">
+            <div class="card-body">
+                <h6 class="text-muted text-uppercase small fw-bold">Tutores Cadastrados</h6>
+                <h3 class="mb-0 text-primary">{{ total_tutores }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm bg-white">
+            <div class="card-body">
+                <h6 class="text-muted text-uppercase small fw-bold">Pacientes (Pets)</h6>
+                <h3 class="mb-0 text-info">{{ total_pets }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm bg-white">
+            <div class="card-body">
+                <h6 class="text-muted text-uppercase small fw-bold">Consultas Ativas</h6>
+                <h3 class="mb-0 text-success">{{ consultas_ativas }}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-white fw-semibold">
+                Clientes
+            </div>
+            <div class="card-body d-flex flex-column justify-content-between">
+                <p class="card-text text-muted">
+                    Gerencie o cadastro de tutores responsáveis e seus respectivos animais, mantendo histórico de espécie, peso e alergias.
+                </p>
+                <div class="d-flex flex-wrap gap-2 mt-3">
+                    <a href="{% url 'listar_clientes' %}" class="btn btn-primary">Ver Tutores e Pets</a>
+                    <a href="{% url 'cadastrar_tutor' %}" class="btn btn-outline-primary">+ Tutor</a>
+                    <a href="{% url 'cadastrar_pet' %}" class="btn btn-outline-primary">+ Pet</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-white fw-semibold">
+                Agendamentos
+            </div>
+            <div class="card-body d-flex flex-column justify-content-between">
+                <p class="card-text text-muted">
+                    Controle a fila de atendimento veterinário, marque consultas com validação automática de conflito de horário e atualize status.
+                </p>
+                <div class="d-flex flex-wrap gap-2 mt-3">
+                    <a href="{% url 'listar_agenda' %}" class="btn btn-success">Acessar Agenda</a>
+                    <a href="{% url 'novo_agendamento' %}" class="btn btn-outline-success">+ Nova Consulta</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

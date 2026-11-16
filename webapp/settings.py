@@ -46,7 +46,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'contas'
+    'contas',
+    'agendamentos',
+    'clientes'
 ]
 
 MIDDLEWARE = [
@@ -136,6 +138,21 @@ MAILERS = {
     },
 }
 
-LOGIN_REDIRECT_URL = 'painel'  
-LOGOUT_REDIRECT_URL = 'login'  
-LOGIN_URL = 'login' 
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'painel'
+LOGOUT_REDIRECT_URL = 'login'
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / 'templates'],  # <-- Permite ler C:\vetcare\templates\
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
