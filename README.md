@@ -17,5 +17,5 @@ O sistema divide-se em módulos independentes (Django Apps) com isolamento de re
 
 1. **Clone o repositório:**
    ```bash
-   git clone [https://github.com/SEU-USUARIO/vetcare.git](https://github.com/SEU-USUARIO/vetcare.git)
+   git clone [https://github.com/isa-sa/vet-care]
    cd vetcare

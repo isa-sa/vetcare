@@ -21,6 +21,7 @@
                         <th>CPF</th>
                         <th>Telefone</th>
                         <th>Pets Vinculados</th>
+                        <th class="text-end" style="width: 180px;">Ações do Tutor</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,12 +32,32 @@
                         <td>{{ tutor.telefone }}</td>
                         <td>
                             {% for pet in tutor.pets.all %}
-                                <span class="badge bg-info text-dark me-1">
-                                    {{ pet.nome }} ({{ pet.get_especie_display }})
-                                </span>
+                                <div class="d-inline-flex align-items-center bg-light border rounded px-2 py-1 me-1 mb-1">
+                                    <span class="small fw-semibold me-2">
+                                        {{ pet.nome }} <span class="text-muted fw-normal">({{ pet.get_especie_display }})</span>
+                                    </span>
+                                    <a href="{% url 'editar_pet' pet.id %}" class="btn btn-sm btn-link text-primary p-0 me-2 text-decoration-none" title="Editar Pet">
+                                        Editar
+                                    </a>
+                                    <form method="post" action="{% url 'excluir_pet' pet.id %}" class="d-inline" onsubmit="return confirm('Deseja realmente excluir o pet {{ pet.nome }}?');">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-sm btn-link text-danger p-0 text-decoration-none" title="Excluir Pet">
+                                            Excluir
+                                        </button>
+                                    </form>
+                                </div>
                             {% empty %}
                                 <span class="text-muted small">Nenhum pet cadastrado</span>
                             {% endfor %}
+                        </td>
+                        <td class="text-end">
+                            <div class="d-inline-flex gap-1">
+                                <a href="{% url 'editar_tutor' tutor.id %}" class="btn btn-sm btn-outline-primary">Editar</a>
+                                <form method="post" action="{% url 'excluir_tutor' tutor.id %}" class="d-inline" onsubmit="return confirm('Deseja realmente excluir o tutor {{ tutor.nome }}?');">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Excluir</button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                     {% endfor %}

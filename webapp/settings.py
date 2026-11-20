@@ -14,14 +14,12 @@ import os
 from pathlib import Path
 from pathlib import Path
 from dotenv import load_dotenv
+from django.contrib.messages import constants as messages
 
-# O BASE_DIR já deve existir no seu arquivo, ele aponta para a pasta do manage.py
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Força o Python a procurar o .env na mesma pasta do BASE_DIR
 load_dotenv(os.path.join(BASE_DIR, '.env'))
 
-# Agora ele vai encontrar!
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
@@ -145,7 +143,7 @@ LOGOUT_REDIRECT_URL = 'login'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # <-- Permite ler C:\vetcare\templates\
+        'DIRS': [BASE_DIR / 'templates'], 
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -156,3 +154,7 @@ TEMPLATES = [
         },
     },
 ]
+
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}

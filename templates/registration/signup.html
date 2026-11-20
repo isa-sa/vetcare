@@ -1,6 +1,45 @@
-<h2>Criar Nova Conta</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }} 
-  <button type="submit">Cadastrar</button>
-</form>
+{% extends 'base.html' %}
+{% block title %}Cadastro de Usuário - VetCare{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-4">
+    <div class="col-md-6">
+        <div class="card shadow-sm auth-card">
+            <div class="card-header bg-white text-center py-3">
+                <h4 class="mb-0 text-primary fw-bold">Cadastrar Novo Usuário</h4>
+                <small class="text-muted">Crie uma conta para operar no sistema VetCare</small>
+            </div>
+            <div class="card-body p-4">
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">{{ form.non_field_errors|striptags }}</div>
+                {% endif %}
+
+                <form method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.help_text %}
+                                <div class="form-text small">{{ field.help_text|safe }}</div>
+                            {% endif %}
+                            {% if field.errors %}
+                                <div class="text-danger small mt-1">{{ field.errors|striptags }}</div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-success">Finalizar Cadastro</button>
+                    </div>
+                </form>
+
+                <hr class="my-4">
+                <div class="text-center small">
+                    Já possui conta? <a href="{% url 'login' %}" class="text-decoration-none fw-semibold">Fazer login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
